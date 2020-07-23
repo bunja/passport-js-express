@@ -22,8 +22,8 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use(passport.initialize);
-app.use(passport.session);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
 
@@ -40,8 +40,15 @@ app.get("/users/register", (req, res) => {
 });
 
 app.get("/users/dashboard", (req, res) => {
-    res.render("dashboard", {user: "LARISA"});
+    res.render("dashboard", {user: req.user.name});
 });
+
+
+app.get('/users/logout', (req, res) => {
+    req.logout();
+    req.flash("success_msg", "You HAVE logged out");
+    res.redirect('/users/login');
+})
 
 app.post('/users/register', async (req, res) => {
     let {name, email, password, password2} = req.body;
@@ -94,7 +101,7 @@ app.post('/users/register', async (req, res) => {
                                 throw err
                             }
                             console.log(results.rows);
-                            req.flash("succes_msg", "You are now registered, Please log in");
+                            req.flash("success_msg", "You are now registered, Please log in");
                             res.redirect("/users/login");
                         }
                     )
