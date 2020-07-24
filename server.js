@@ -119,6 +119,14 @@ app.post(
         failureFlash: true
     })
 );
+
+app.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+    })
+);
+
+app.get('/auth/google/callback', passport.authenticate('google')
+);
   
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
