@@ -71,8 +71,9 @@ function initialize(passport) {
                             if (err) {
                                 throw err
                             }
-                            console.log(results.rows);
+                            //console.log(results.rows);
                             const user = results.rows[0]; 
+                            console.log("user", user);
                             return done(null, user);
                         }
                     )

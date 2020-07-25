@@ -125,8 +125,14 @@ app.get('/auth/google', passport.authenticate('google', {
     })
 );
 
-app.get('/auth/google/callback', passport.authenticate('google')
-);
+// app.get('/auth/google/callback', passport.authenticate('google')
+// );
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/users/login' }),
+  function(req, res) {
+    res.redirect('/users/dashboard');
+  });
   
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
